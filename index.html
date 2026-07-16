@@ -8,15 +8,11 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .import-card{margin:18px 0;padding:16px;border:1px solid #dfe6ef;border-radius:14px;background:#f8fafc}.import-card h3{margin-top:0}.import-card p{color:#64748b}.import-status{margin-top:12px;font-weight:700;line-height:1.4}.security-note{font-size:.84rem;color:#64748b;margin-top:10px}
+    .import-card,.tool-card{margin:18px 0;padding:16px;border:1px solid #dfe6ef;border-radius:14px;background:#f8fafc}.import-card h3,.tool-card h3{margin-top:0}.import-card p,.muted{color:#64748b}.import-status{margin-top:12px;font-weight:700;line-height:1.4}.security-note{font-size:.84rem;color:#64748b;margin-top:10px}.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.metric{padding:14px;border-radius:12px;background:#eef3f8}.metric small{display:block;color:#64748b}.metric strong{display:block;margin-top:5px;font-size:1.25rem}.forecast-table{width:100%;border-collapse:collapse}.forecast-table th,.forecast-table td{padding:9px 6px;border-bottom:1px solid #e5e7eb;text-align:right}.forecast-table th:first-child,.forecast-table td:first-child{text-align:left}.recommendation{padding:14px;margin:10px 0;border-radius:12px;background:#fff;border-left:5px solid #d9a441}.recommendation strong{display:block;margin-bottom:5px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.wide{grid-column:1/-1}@media(min-width:700px){.metric-grid{grid-template-columns:repeat(4,1fr)}}
   </style>
 </head>
 <body>
-  <header>
-    <div><h1>Sihle Finance</h1><p>Monthly budget, spending and investment decisions</p></div>
-    <button id="installBtn" class="secondary hidden">Install App</button>
-  </header>
-
+  <header><div><h1>Sihle Finance</h1><p>Cash flow, wealth and investment decisions</p></div><button id="installBtn" class="secondary hidden">Install App</button></header>
   <main>
     <section class="cards">
       <div class="card"><span>Net Salary</span><strong id="netSalary">R0</strong></div>
@@ -24,59 +20,26 @@
       <div class="card"><span>Monthly Surplus</span><strong id="monthlySurplus">R0</strong></div>
       <div class="card"><span>Savings Rate</span><strong id="savingsRate">0%</strong></div>
     </section>
-
     <nav class="tabs">
-      <button class="tab active" data-tab="dashboard">Dashboard</button>
-      <button class="tab" data-tab="expenses">Expenses</button>
-      <button class="tab" data-tab="transactions">Transactions</button>
-      <button class="tab" data-tab="investments">Investments</button>
-      <button class="tab" data-tab="decision">Decision Tool</button>
+      <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="expenses">Expenses</button><button class="tab" data-tab="transactions">Transactions</button><button class="tab" data-tab="investments">Wealth</button><button class="tab" data-tab="forecast">Forecast</button><button class="tab" data-tab="decision">Decision Tool</button>
     </nav>
-
-    <section id="dashboard" class="panel active">
-      <h2>Monthly Overview</h2>
-      <div class="progress-wrap"><div class="label-row"><span>Income used</span><span id="incomeUsedLabel">0%</span></div><div class="progress"><div id="incomeUsedBar"></div></div></div>
-      <div class="advice" id="adviceBox"></div>
-      <h3>Largest monthly costs</h3><div id="topExpenses" class="list"></div>
-    </section>
-
+    <section id="dashboard" class="panel active"><h2>Monthly Overview</h2><div class="progress-wrap"><div class="label-row"><span>Income used</span><span id="incomeUsedLabel">0%</span></div><div class="progress"><div id="incomeUsedBar"></div></div></div><div class="advice" id="adviceBox"></div><h3>Largest monthly costs</h3><div id="topExpenses" class="list"></div></section>
     <section id="expenses" class="panel"><div class="section-head"><h2>Recurring Expenses</h2><button id="addExpenseBtn">Add Expense</button></div><div id="expenseList" class="list"></div></section>
-
-    <section id="transactions" class="panel">
-      <div class="section-head"><h2>Monthly Transactions</h2><button id="addTransactionBtn">Add Transaction</button></div>
-      <div class="filters"><input type="month" id="monthFilter" /><select id="transactionCategoryFilter"><option value="">All categories</option></select></div>
-      <div id="transactionList" class="list"></div>
-
-      <div class="import-card">
-        <h3>Import a bank statement</h3>
-        <p>Import a Discovery Bank Excel or CSV transaction export. The app automatically categorises purchases, detects income and marks transfers between your own accounts.</p>
-        <label>Statement account
-          <select id="statementAccount"><option>Discovery Credit Card</option><option>Discovery Debit Card</option><option>Standard Bank</option></select>
-        </label>
-        <label class="secondary file-label">Choose Excel or CSV file<input type="file" id="statementInput" accept=".xlsx,.xls,.csv"></label>
-        <div id="importStatus" class="import-status"></div>
-        <div class="security-note">The statement is processed on your device. It is not uploaded to a server.</div>
-      </div>
-
-      <div class="button-row"><button id="exportBtn" class="secondary">Export Backup</button><label class="secondary file-label">Import Backup<input type="file" id="importInput" accept=".json"></label></div>
+    <section id="transactions" class="panel"><div class="section-head"><h2>Monthly Transactions</h2><button id="addTransactionBtn">Add Transaction</button></div><div class="filters"><input type="month" id="monthFilter" /><select id="transactionCategoryFilter"><option value="">All categories</option></select></div><div id="transactionList" class="list"></div><div class="import-card"><h3>Import a bank statement</h3><p>Import a Discovery Bank Excel or CSV export. Purchases are categorised and transfers are marked to prevent double counting.</p><label>Statement account<select id="statementAccount"><option>Discovery Credit Card</option><option>Discovery Debit Card</option><option>Standard Bank</option></select></label><label class="secondary file-label">Choose Excel or CSV file<input type="file" id="statementInput" accept=".xlsx,.xls,.csv"></label><div id="importStatus" class="import-status"></div><div class="security-note">Processed locally on your device.</div></div><div class="button-row"><button id="exportBtn" class="secondary">Export Backup</button><label class="secondary file-label">Import Backup<input type="file" id="importInput" accept=".json"></label></div></section>
+    <section id="investments" class="panel">
+      <div class="section-head"><h2>Wealth & Retirement</h2><button id="addInvestmentBtn">Add Fund</button></div>
+      <div class="metric-grid"><div class="metric"><small>Total investments</small><strong id="totalInvestments">R0</strong></div><div class="metric"><small>Monthly contributions</small><strong id="totalContributions">R0</strong></div><div class="metric"><small>Retirement assets</small><strong id="retirementAssets">R0</strong></div><div class="metric"><small>Projected age 60</small><strong id="age60Value">R0</strong></div></div>
+      <div id="investmentList" class="list" style="margin-top:16px"></div>
+      <div class="import-card"><h3>Update from an investment statement</h3><p>For SANLAM unit trusts, your RA or provident fund, enter the latest closing value from the monthly statement. A more specific automatic SANLAM parser will be added after you provide a sample export.</p><div class="form-grid"><label>Fund<select id="statementFund"></select></label><label>Statement date<input id="fundStatementDate" type="date"></label><label class="wide">Closing value<input id="fundStatementValue" type="number" min="0" step="0.01"></label></div><button id="updateFundValue">Update fund value</button><div id="fundUpdateStatus" class="import-status"></div></div>
+      <div class="tool-card"><h3>Investment allocation guidance</h3><div id="investmentGuidance"></div></div>
     </section>
-
-    <section id="investments" class="panel"><div class="section-head"><h2>Investment Tracker</h2><button id="addInvestmentBtn">Add Investment</button></div><div id="investmentList" class="list"></div></section>
-
-    <section id="decision" class="panel">
-      <h2>Purchase Decision Tool</h2>
-      <label>Item<input id="decisionItem" placeholder="e.g. Holiday"></label>
-      <label>Cost<input id="decisionCost" type="number" min="0" placeholder="0"></label>
-      <button id="calculateDecision">Check affordability</button><div id="decisionResult" class="decision-result"></div>
+    <section id="forecast" class="panel">
+      <h2>Future Cash Flow & Growth</h2><div class="form-grid"><label>Current age<input id="currentAge" type="number" min="18" max="80" value="29"></label><label>Retirement age<input id="retirementAge" type="number" min="45" max="80" value="60"></label><label>Expected annual return %<input id="returnRate" type="number" min="0" max="30" step="0.1" value="9"></label><label>Annual salary growth %<input id="salaryGrowth" type="number" min="0" max="20" step="0.1" value="6"></label><label>Annual expense inflation %<input id="expenseInflation" type="number" min="0" max="20" step="0.1" value="5"></label><label>Extra monthly investment<input id="extraInvestment" type="number" min="0" step="100" value="0"></label></div><button id="runForecast">Run forecast</button><div id="forecastSummary" class="advice"></div><div style="overflow:auto"><table class="forecast-table"><thead><tr><th>Year</th><th>Income</th><th>Expenses</th><th>Annual surplus</th><th>Investments</th></tr></thead><tbody id="forecastRows"></tbody></table></div><div class="tool-card"><h3>Planning insights</h3><div id="forecastAdvice"></div></div>
     </section>
+    <section id="decision" class="panel"><h2>Decision Tool</h2><label>Decision type<select id="decisionType"><option>Once-off purchase</option><option>New monthly commitment</option><option>House deposit</option><option>Vehicle</option><option>Holiday</option></select></label><label>Item<input id="decisionItem" placeholder="e.g. Holiday"></label><label>Cost or monthly payment<input id="decisionCost" type="number" min="0" placeholder="0"></label><button id="calculateDecision">Analyse decision</button><div id="decisionResult" class="decision-result"></div></section>
   </main>
-
   <dialog id="expenseDialog"><form method="dialog" id="expenseForm"><h3>Add recurring expense</h3><label>Name<input id="expenseName" required></label><label>Amount<input id="expenseAmount" type="number" min="0" step="0.01" required></label><label>Category<input id="expenseCategory" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
   <dialog id="transactionDialog"><form method="dialog" id="transactionForm"><h3>Add transaction</h3><label>Date<input id="transactionDate" type="date" required></label><label>Description<input id="transactionDescription" required></label><label>Category<input id="transactionCategory" required></label><label>Account<select id="transactionAccount"><option>Standard Bank</option><option>Discovery Credit Card</option><option>Discovery Debit Card</option><option>Cash</option></select></label><label>Amount<input id="transactionAmount" type="number" min="0" step="0.01" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
-  <dialog id="investmentDialog"><form method="dialog" id="investmentForm"><h3>Add investment</h3><label>Name<input id="investmentName" required></label><label>Current value<input id="investmentValue" type="number" min="0" step="0.01" required></label><label>Monthly contribution<input id="investmentContribution" type="number" min="0" step="0.01" required></label><label>Target value<input id="investmentTarget" type="number" min="0" step="0.01" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
-
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="app.js"></script>
-  <script src="bank-import.js"></script>
-</body>
-</html>
+  <dialog id="investmentDialog"><form method="dialog" id="investmentForm"><h3>Add investment or retirement fund</h3><label>Name<input id="investmentName" required placeholder="e.g. SANLAM Unit Trust"></label><label>Type<select id="investmentType"><option>Unit Trust</option><option>Provident Fund</option><option>Retirement Annuity</option><option>TFSA</option><option>Emergency Fund</option><option>Other</option></select></label><label>Current value<input id="investmentValue" type="number" min="0" step="0.01" required></label><label>Monthly contribution<input id="investmentContribution" type="number" min="0" step="0.01" required></label><label>Target value<input id="investmentTarget" type="number" min="0" step="0.01" required></label><label>Expected annual return %<input id="investmentReturn" type="number" min="0" max="30" step="0.1" value="9" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="app.js"></script><script src="bank-import.js"></script><script src="wealth.js"></script>
+</body></html>
