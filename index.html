@@ -7,13 +7,13 @@
   <title>Sihle Finance</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .import-card{margin:18px 0;padding:16px;border:1px solid #dfe6ef;border-radius:14px;background:#f8fafc}.import-card h3{margin-top:0}.import-card p{color:#64748b}.import-status{margin-top:12px;font-weight:700;line-height:1.4}.security-note{font-size:.84rem;color:#64748b;margin-top:10px}
+  </style>
 </head>
 <body>
   <header>
-    <div>
-      <h1>Sihle Finance</h1>
-      <p>Monthly budget, spending and investment decisions</p>
-    </div>
+    <div><h1>Sihle Finance</h1><p>Monthly budget, spending and investment decisions</p></div>
     <button id="installBtn" class="secondary hidden">Install App</button>
   </header>
 
@@ -46,7 +46,19 @@
       <div class="section-head"><h2>Monthly Transactions</h2><button id="addTransactionBtn">Add Transaction</button></div>
       <div class="filters"><input type="month" id="monthFilter" /><select id="transactionCategoryFilter"><option value="">All categories</option></select></div>
       <div id="transactionList" class="list"></div>
-      <div class="button-row"><button id="exportBtn" class="secondary">Export Data</button><label class="secondary file-label">Import Data<input type="file" id="importInput" accept=".json"></label></div>
+
+      <div class="import-card">
+        <h3>Import a bank statement</h3>
+        <p>Import a Discovery Bank Excel or CSV transaction export. The app automatically categorises purchases, detects income and marks transfers between your own accounts.</p>
+        <label>Statement account
+          <select id="statementAccount"><option>Discovery Credit Card</option><option>Discovery Debit Card</option><option>Standard Bank</option></select>
+        </label>
+        <label class="secondary file-label">Choose Excel or CSV file<input type="file" id="statementInput" accept=".xlsx,.xls,.csv"></label>
+        <div id="importStatus" class="import-status"></div>
+        <div class="security-note">The statement is processed on your device. It is not uploaded to a server.</div>
+      </div>
+
+      <div class="button-row"><button id="exportBtn" class="secondary">Export Backup</button><label class="secondary file-label">Import Backup<input type="file" id="importInput" accept=".json"></label></div>
     </section>
 
     <section id="investments" class="panel"><div class="section-head"><h2>Investment Tracker</h2><button id="addInvestmentBtn">Add Investment</button></div><div id="investmentList" class="list"></div></section>
@@ -60,11 +72,11 @@
   </main>
 
   <dialog id="expenseDialog"><form method="dialog" id="expenseForm"><h3>Add recurring expense</h3><label>Name<input id="expenseName" required></label><label>Amount<input id="expenseAmount" type="number" min="0" step="0.01" required></label><label>Category<input id="expenseCategory" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
-
   <dialog id="transactionDialog"><form method="dialog" id="transactionForm"><h3>Add transaction</h3><label>Date<input id="transactionDate" type="date" required></label><label>Description<input id="transactionDescription" required></label><label>Category<input id="transactionCategory" required></label><label>Account<select id="transactionAccount"><option>Standard Bank</option><option>Discovery Credit Card</option><option>Discovery Debit Card</option><option>Cash</option></select></label><label>Amount<input id="transactionAmount" type="number" min="0" step="0.01" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
-
   <dialog id="investmentDialog"><form method="dialog" id="investmentForm"><h3>Add investment</h3><label>Name<input id="investmentName" required></label><label>Current value<input id="investmentValue" type="number" min="0" step="0.01" required></label><label>Monthly contribution<input id="investmentContribution" type="number" min="0" step="0.01" required></label><label>Target value<input id="investmentTarget" type="number" min="0" step="0.01" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
 
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
+  <script src="bank-import.js"></script>
 </body>
 </html>
