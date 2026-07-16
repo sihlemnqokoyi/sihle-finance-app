@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1f3a" />
+  <title>Sihle Finance</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Sihle Finance</h1>
+      <p>Monthly budget, spending and investment decisions</p>
+    </div>
+    <button id="installBtn" class="secondary hidden">Install App</button>
+  </header>
+
+  <main>
+    <section class="cards">
+      <div class="card"><span>Net Salary</span><strong id="netSalary">R0</strong></div>
+      <div class="card"><span>Monthly Expenses</span><strong id="monthlyExpenses">R0</strong></div>
+      <div class="card"><span>Monthly Surplus</span><strong id="monthlySurplus">R0</strong></div>
+      <div class="card"><span>Savings Rate</span><strong id="savingsRate">0%</strong></div>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="expenses">Expenses</button>
+      <button class="tab" data-tab="transactions">Transactions</button>
+      <button class="tab" data-tab="investments">Investments</button>
+      <button class="tab" data-tab="decision">Decision Tool</button>
+    </nav>
+
+    <section id="dashboard" class="panel active">
+      <h2>Monthly Overview</h2>
+      <div class="progress-wrap"><div class="label-row"><span>Income used</span><span id="incomeUsedLabel">0%</span></div><div class="progress"><div id="incomeUsedBar"></div></div></div>
+      <div class="advice" id="adviceBox"></div>
+      <h3>Largest monthly costs</h3><div id="topExpenses" class="list"></div>
+    </section>
+
+    <section id="expenses" class="panel"><div class="section-head"><h2>Recurring Expenses</h2><button id="addExpenseBtn">Add Expense</button></div><div id="expenseList" class="list"></div></section>
+
+    <section id="transactions" class="panel">
+      <div class="section-head"><h2>Monthly Transactions</h2><button id="addTransactionBtn">Add Transaction</button></div>
+      <div class="filters"><input type="month" id="monthFilter" /><select id="transactionCategoryFilter"><option value="">All categories</option></select></div>
+      <div id="transactionList" class="list"></div>
+      <div class="button-row"><button id="exportBtn" class="secondary">Export Data</button><label class="secondary file-label">Import Data<input type="file" id="importInput" accept=".json"></label></div>
+    </section>
+
+    <section id="investments" class="panel"><div class="section-head"><h2>Investment Tracker</h2><button id="addInvestmentBtn">Add Investment</button></div><div id="investmentList" class="list"></div></section>
+
+    <section id="decision" class="panel">
+      <h2>Purchase Decision Tool</h2>
+      <label>Item<input id="decisionItem" placeholder="e.g. Holiday"></label>
+      <label>Cost<input id="decisionCost" type="number" min="0" placeholder="0"></label>
+      <button id="calculateDecision">Check affordability</button><div id="decisionResult" class="decision-result"></div>
+    </section>
+  </main>
+
+  <dialog id="expenseDialog"><form method="dialog" id="expenseForm"><h3>Add recurring expense</h3><label>Name<input id="expenseName" required></label><label>Amount<input id="expenseAmount" type="number" min="0" step="0.01" required></label><label>Category<input id="expenseCategory" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
+
+  <dialog id="transactionDialog"><form method="dialog" id="transactionForm"><h3>Add transaction</h3><label>Date<input id="transactionDate" type="date" required></label><label>Description<input id="transactionDescription" required></label><label>Category<input id="transactionCategory" required></label><label>Account<select id="transactionAccount"><option>Standard Bank</option><option>Discovery Credit Card</option><option>Discovery Debit Card</option><option>Cash</option></select></label><label>Amount<input id="transactionAmount" type="number" min="0" step="0.01" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
+
+  <dialog id="investmentDialog"><form method="dialog" id="investmentForm"><h3>Add investment</h3><label>Name<input id="investmentName" required></label><label>Current value<input id="investmentValue" type="number" min="0" step="0.01" required></label><label>Monthly contribution<input id="investmentContribution" type="number" min="0" step="0.01" required></label><label>Target value<input id="investmentTarget" type="number" min="0" step="0.01" required></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default">Save</button></div></form></dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
